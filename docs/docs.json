@@ -1,0 +1,166 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sinus webshop API",
+    "description": "API for Sinus webshop",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {
+      "Products": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "shortDesc": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "longDesc": {
+            "type": "string"
+          },
+          "imgFile": {
+            "type": "string"
+          },
+          "serial": {
+            "type": "string"
+          }
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "shortDesc": {
+            "type": "string"
+          },
+          "imgFile": {
+            "type": "string"
+          },
+          "serial": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+
+  "paths": {
+    "/api/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "- Return all products",
+        "description": null,
+        "responses": {
+          "200": {
+            "description": "LIST OF ALL PRODUCTS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "number"
+                    },
+                    "allProducts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Products"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cart": {
+      "get": {
+        "tags": ["Cart"],
+        "summary": "- Return cart",
+        "description": null,
+        "responses": {
+          "200": {
+            "description": "Show cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "number"
+                    },
+                    "cart": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Cart"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cart/{id}": {
+      "delete": {
+        "tags": ["Cart"],
+        "summary": "- Delete item from cart",
+        "description": null,
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Item with matched ID to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Item deleted"
+          },
+          "404": {
+            "description": "ID not valid. No item with matched ID found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
